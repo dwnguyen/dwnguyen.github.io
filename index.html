@@ -1,0 +1,73 @@
+<html>
+    <head>
+        <script src="http://d3js.org/d3.v7.min.js" charset="utf-8"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-annotation/2.5.1/d3-annotation.min.js" charset="utf-8"></script>
+
+    </head>
+    <body onload="load()">
+        <div style="display: flex">
+            <script>
+                function showChart(config) {
+                    // if (config == 'all') {
+                    //     d3.selectAll('svg').attr('style', '')
+                    //     d3.select('#prevButton').attr('onclick', 'showChart("#chart3")')
+                    //     return
+                    // }
+                    d3.selectAll('svg').attr('style', 'display: none;')
+                    d3.select(config).attr('style', '')
+                    d3.select('#chart1 .annotations').attr('style', '')
+
+                    if (config == '#chart1') {
+                        d3.select('#prevButton').attr('onclick', '').attr('disabled', '')
+                        d3.select('#nextButton').attr('onclick', 'showChart("#chart2")')
+                        
+                        d3.select('p').html(`Is # of COVID-19 Deaths a good measure of how well a state handled COVID-19?
+Logically, having less deaths should mean that a state is better handling COVID-19.
+However, are there other factors that could cause a state to have more COVID-19 deaths?`)
+                    }
+                    if (config == '#chart2') {
+                        d3.select('#prevButton').attr('onclick', 'showChart("#chart1")').attr('disabled', null)
+                        d3.select('#nextButton').attr('onclick', 'showChart("#chart3")').attr('disabled', null)
+                        d3.select('p').html(`We can see there is a positive relationship between population and # of COVID-19 deaths.
+The higher the population of a state, the higher the # of COVID-19 deaths.
+This suggests # of COVID-19 deaths is heavily dependent on the population of a state.
+So, what would be a better measure of a state's response to COVID-19?`)
+                    }
+                    if (config == '#chart3') {
+                        d3.select('#prevButton').attr('onclick', 'showChart("#chart2")')
+                        d3.select('#nextButton').attr('onclick', '').attr('disabled', '')
+                        d3.select('#chart1').attr('style', '')
+                        d3.select('#chart1 .annotations').attr('style', 'display:none')
+
+
+                        d3.select('p').html(`By instead using the # of COVID-19 deaths per capita as a measure, we remove
+the influence of a state's population from the measure. This leads to a measure
+that is more directly linked to a state's reponse to COVID-19, and less affected
+by other factors such as population.`)
+                    }
+
+                }
+            </script>
+            <div style="width: 1000px">
+                <p style="margin: 20 100">
+                    Is # of COVID-19 Deaths a good measure of how well a state handled COVID-19?
+Logically, having less deaths should mean that a state is better handling COVID-19.
+However, are there other factors that could cause a state to have more COVID-19 deaths?
+                </p>
+                <svg id="chart3"></svg>
+
+                <svg id="chart1"></svg>
+
+                <svg id="chart2"></svg>
+            </div>
+            <div style="margin: 20px">
+                <button id="prevButton" disabled>Previous </button>
+                <button id="nextButton" onclick="showChart('#chart2')">Next</button>
+            </div>
+        </div>
+        
+
+        <div id ="tooltip"></div>
+        <script src="chart.js"></script>
+    </body>
+</html>
